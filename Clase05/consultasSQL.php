@@ -26,5 +26,13 @@ VALUES (100,1,500),
 4) SELECT SUM(CANTIDAD) FROM `envios`
 5) SELECT PNUMERO FROM `envios` LIMIT 3
 6) SELECT proveedores.nombre as proveedores, productos.PNOMBRE as productos FROM `envios`,`productos`, `proveedores` WHERE envios.NUMERO= proveedores.NUMERO AND productos.PNUMERO= envios.PNUMERO
-7)
+7) SELECT Cantidad,precio,(Cantidad * Precio) FROM `envios`,`productos`
+8) SELECT SUM(envios.Cantidad) as 'cantidad total' FROM envios WHERE envios.numero = 102 and envios.pNumero=1
+9) SELECT productos.pNumero FROM productos inner JOIN envios on envios.pNumero= productos.pNumero INNER JOIN proveedores on envios.Numero = proveedores.Numero where proveedores.Localidad= 'Avellaneda'
+10)SELECT proveedores.Domicilio as Domicilio,proveedores.Localidad as localidades FROM proveedores WHERE proveedores.Localidad LIKE '%i%'
+11)INSERT INTO `productos`(`pNumero`, `pNombre`, `Precio`, `Tamaño`) VALUES (4,'CHOCOLATE','25.35','CHICO')
+12)INSERT INTO `proveedores`(`Numero`, `Nombre`, `Domicilio`, `Localidad`) VALUES (103,'Norris','Oyuela 898','Lanus')
+13)INSERT INTO `proveedores`(`Numero`, `Nombre`, `Domicilio`, `Localidad`) VALUES (107,'Rosales','','La Plata')
+14)UPDATE `productos` SET `Precio`='97.50' WHERE productos.Tamaño='Grande'
+15)
 ?>
