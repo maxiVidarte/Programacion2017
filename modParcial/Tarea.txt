@@ -1,7 +1,0 @@
-Terminal el simulacro de parcial.
-
-Hacer funciones y logica (abm de un txt) para poder reutilizar
-
-Proponer otro parcial con distinta tematica y rehacer con las funciones ya definidas.
-
-Nota: la imagen que aparezca en otra columna de la tabla. (que este bien formateada la tabla)
