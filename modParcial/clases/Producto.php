@@ -200,6 +200,19 @@ class Producto{
 		fclose($ar);
             return $resultado;
     }
+    public static function TraerTodasLasImagenesGet($objeto){
+        if($objeto!="vigente" && $objeto!="borrado"){
+            return false;
+        }
+        if($objeto =="vigente"){
+            $myArray = scandir("./FotosProductos");
+            unset($myArray[0],$myArray[1]);
+        }else if($objeto == "borrado"){
+            $myArray = scandir("./FotosBorrados");
+            unset($myArray[0],$myArray[1]);
+        }
+        return $myArray;
+    }
 }
 
 ?>
