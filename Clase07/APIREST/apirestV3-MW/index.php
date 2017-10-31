@@ -1,6 +1,6 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+use \Psr\Http\Message\ResponseInterface as Response; //es inmutable. por mas que lo modifique va a ser el mismo
 
 require '../composer/vendor/autoload.php';
 require '/clases/AccesoDatos.php';
@@ -30,10 +30,10 @@ $app = new \Slim\App(["settings" => $config]);
 /* FUNCION MIDDELWARE*/
 $VerificadorDeCredenciales = function ($request, $response, $next) {
 
-  if($request->isGet())
+  if($request->isGet())//quiere decir si el request es get o post, en este caso es get
   {
      $response->getBody()->write('<p>NO necesita credenciales para los get</p>');
-     $response = $next($request, $response);
+     $response = $next($request, $response);//este next hace un callback
   }
   else
   {
@@ -58,6 +58,14 @@ $VerificadorDeCredenciales = function ($request, $response, $next) {
 
 /*LLAMADA A METODOS DE INSTANCIA DE UNA CLASE*/
   
+$app->post('/chat/', function($request, $response){
+  //tomamos un parametro
+  $parametros = $request->getParsedBody();
+  echo $parametros['mensaje'];
+  $miArchivo = fopen("chat.txt","a");
+  fwrite($miArchivo,$parametros['mensaje']."\r\t");
+});
+
 
 $app->group('/cd', function () {
  
@@ -77,6 +85,8 @@ $app->group('/cd', function () {
 $app->add(function ($request, $response, $next) {
   $response->getBody()->write('<p>Antes de ejecutar UNO </p>');
   $response = $next($request, $response);
+  //comente el response de arriba para que no traiga los cds
+  //$response->getBody()->write("<p>Traer Todos</p>");
   $response->getBody()->write('<p>Despues de ejecutar UNO</p>');
 
   return $response;
