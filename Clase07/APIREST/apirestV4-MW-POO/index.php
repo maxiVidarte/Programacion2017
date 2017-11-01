@@ -41,3 +41,4 @@ $app->group('/cd', function () {
 })->add(\MWparaAutentificar::class . ':VerificarUsuario')->add(\MWparaCORS::class . ':HabilitarCORS8080');
 
 $app->run();
+//ip 186.19.26.205

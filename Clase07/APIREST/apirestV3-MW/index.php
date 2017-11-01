@@ -62,10 +62,17 @@ $app->post('/chat/', function($request, $response){
   //tomamos un parametro
   $parametros = $request->getParsedBody();
   echo $parametros['mensaje'];
+  $ip = $_SERVER["REMOTE_ADDR"];
+  echo $ip;
   $miArchivo = fopen("chat.txt","a");
-  fwrite($miArchivo,$parametros['mensaje']."\r\t");
+  fwrite($miArchivo,$_SERVER["REMOTE_ADDR"]."\r\t");
 });
-
+$app->get('/usuario/',function($request,$response){
+   $ip = $_SERVER["REMOTE_ADDR"];
+   echo $ip;
+   $miArchivo = fopen("ipUsuarios.txt","a");
+   fwrite($miArchivo,$_SERVER["REMOTE_ADDR"]."\r\t");
+});
 
 $app->group('/cd', function () {
  
@@ -115,11 +122,6 @@ $app->add(function ($req, $res, $next) {
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
-
-
-
-
-
 
 
 $app->run();
