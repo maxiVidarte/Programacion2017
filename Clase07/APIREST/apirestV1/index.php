@@ -25,7 +25,9 @@ $app = new \Slim\App(["settings" => $config]);
 
 //require_once "saludo.php";
 
-
+/**
+ * estoy comentando el metodo get
+ */
 $app->get('[/]', function (Request $request, Response $response) {    
     $response->getBody()->write("GET => Bienvenido!!! ,a SlimFramework");
     return $response;

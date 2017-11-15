@@ -1,0 +1,8 @@
+ejecuta este comando:
+http://apidocjs.com/#getting-started
+
+apidoc -i apirest/ -o documentacion/documento/ -t documentacion/template/
+apidoc -i carpeta del proyecto -o carpeta donde se va a guardar la documentacion -t no lo vimos todavia
+
+//apidoc -i ElDirectorioDeLaApi/ -o documentacion/documento/ -t documentacion/template/
+ 
