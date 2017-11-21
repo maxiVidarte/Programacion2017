@@ -18,15 +18,27 @@ class Empleado
 		$ArrayDeParametros = $request->getParsedBody();
 		$email=$ArrayDeParametros['email'];
 		$clave= $ArrayDeParametros['clave'];
-    	$elEmpleado=Empleado::TraerUnEmpleado($email,$clave);
-     	$newResponse = $response->withJson($elEmpleado, 200);  
-    	return $newResponse;
+		$datos=Empleado::TraerUnEmpleado($email,$clave);
+		$elToken = Empleado::CreaToken($request,$response);
+		$newResponse = $response->withJson($datos, 200);  
+		if($datos!=null){
+			return "{'valido':'true','usuario':$newResponse,'token':$elToken}";
+		}
+    	else{
+			return "{'valido':'false'}";
+		}
     }
      public function TraerTodos($request, $response, $args) {
-      	$todosLosEmpleados=Empleados::TraerTodoLosEmpleados();
+      	$todosLosEmpleados=Empleado::TraerTodoLosEmpleados();
      	$newResponse = $response->withJson($todosLosEmpleados, 200);  
     	return $newResponse;
-    }
+	}
+	public function CreaToken($request, $response) {
+		$ArrayDeParametros = $request->getParsedBody();
+		$datos = array('email' => $ArrayDeParametros['email'],'clave' => $ArrayDeParametros['clave']);
+		$token= AutentificadorJWT::CrearToken($datos);  
+		return $token;
+	}
       public function CargarUno($request, $response, $args) {
      	$response->getBody()->write("<h1>Cargar uno nuevo</h1>");
       	return $response;
@@ -34,7 +46,7 @@ class Empleado
 	 public function InsertarElEmpleado()
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into empleado (nombre,apellido,mail,foto,legajo,clave,perfil)values('$this->nombre','$this->apellido','$this->mail','$this->foto','$this->legajo','$this->clave','$this->perfil')");
+				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into empleados (nombre,apellido,mail,foto,legajo,clave,perfil)values('$this->nombre','$this->apellido','$this->mail','$this->foto','$this->legajo','$this->clave','$this->perfil')");
 				$consulta->execute();
 				return $objetoAccesoDato->RetornarUltimoIdInsertado();
 				
@@ -44,7 +56,7 @@ class Empleado
 	 public function InsertarElEmpleadoParametros()
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into empleado (nombre,apellido,email,foto,legajo,clave,perfil)values(:nombre,:apellido,:email,:foto,:legajo,:clave,:perfil)");
+				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into empleados (nombre,apellido,email,foto,legajo,clave,perfil)values(:nombre,:apellido,:email,:foto,:legajo,:clave,:perfil)");
 				$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
 				$consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
 				$consulta->bindValue(':email', $this->email, PDO::PARAM_STR);
@@ -71,15 +83,15 @@ class Empleado
   	public static function TraerTodoLosEmpleados()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id,titel as titulo, interpret as cantante,jahr as año from cds");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select * from empleados");
 			$consulta->execute();			
-			return $consulta->fetchAll(PDO::FETCH_CLASS, "cd");		
+			return $consulta->fetchAll(PDO::FETCH_CLASS, "empleado");		
 	}
 
 	public static function TraerUnEmpleado($email,$clave) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select nombre,apellido from empleado where email = '$email' AND clave = '$clave' ");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select nombre,apellido,email,foto,legajo,perfil from empleados where email = '$email' AND clave = '$clave' ");
 			$consulta->execute();
 			$EmpleadoBuscado= $consulta->fetchObject('empleado');
 			return $EmpleadoBuscado;			
