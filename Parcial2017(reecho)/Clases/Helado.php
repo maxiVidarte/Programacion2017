@@ -166,7 +166,7 @@ class Helado
         }
         fclose($archivo);
         
-        $destino = "ImagenesDeLaVenta/".$sabor." ".date("d-m-y").".jpg";
+        $destino = "ImagenesDeLaVenta/".$sabor."-".date("d/m/y").".jpg";
         
         $archivo2 = fopen("archivos/Ventas.txt","a");
         $venta = $usuario." - ".$sabor." - ".$tipo." - ".$cantidad." - ".$destino."\r\n";
@@ -181,8 +181,6 @@ class Helado
     }
 
     public static function ListaVentas($tipo,$datos){
-        $hacer = 0;
-        
         $miArraydeUsuario=array();
         $miArrayGustos = array();
         $miArrayTotal = array();
