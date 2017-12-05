@@ -19,7 +19,7 @@ class Helado{
         return $this->sabor."-".$this->precio."-".$this->tipo."-".$this->cantidad."\n";
     }
     
-    }
+    
     //CONSULTA SI HAY HELADO CON SABOR Y TIPO.
     public function HeladoEsta($sabor,$tipo){
         $archivo = fopen("archivos/Helados.txt","r");
