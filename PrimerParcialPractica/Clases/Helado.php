@@ -14,6 +14,7 @@ class Helado{
             $this->cantidad = $cantidad;
         }
     }
+    
     public function ToString(){
         return $this->sabor."-".$this->precio."-".$this->tipo."-".$this->cantidad."\n";
     }
