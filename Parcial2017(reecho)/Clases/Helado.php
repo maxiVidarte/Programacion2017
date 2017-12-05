@@ -156,9 +156,8 @@ class Helado
              $key->cantidad = (string)$resta;
              $flag=0;
             }
-        if($flag == 1){
-            $indice++;}
         }
+        if($flag == 1){
 
         $archivo = fopen("archivos/Helados.txt","w");
         foreach ($heladosArray as $key ) {
@@ -173,10 +172,9 @@ class Helado
         fwrite($archivo2,$venta);
         fclose($archivo2);
         
-        
+                
         $resultado = move_uploaded_file($foto["tmp_name"],$destino);
-        
-
+        }
         return $resultado;
     }
 
